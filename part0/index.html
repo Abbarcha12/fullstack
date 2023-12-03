@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+</head>
+<body>
+    <h1>Notes </h1>
+    <form class="form">
+        <input type="text" id="noteInput">
+        <button type="submit">Click</button>
+    </form>
+    
+    <ul id="notesList"></ul>
+
+    <script>
+        var notes = [];
+
+        var form = document.querySelector('.form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var noteInput = document.getElementById('noteInput');
+            var noteContent = noteInput.value;
+
+            if (noteContent.trim() !== '') {
+                var note = {
+                    content: noteContent,
+                    date: new Date(),
+                };
+
+                notes.push(note);
+                noteInput.value = '';
+                redrawNotes();
+                sendToServer(note);
+            }
+        });
+
+        function redrawNotes() {
+            var notesList = document.getElementById('notesList');
+            notesList.innerHTML = '';
+
+            notes.forEach(function(note) {
+                var li = document.createElement('li');
+                li.textContent = note.content + ' - ' + note.date.toLocaleString();
+                notesList.appendChild(li);
+            });
+        }
+
+        function sendToServer(note) {
+            // Simulate sending the note to the server (replace this with actual server communication)
+            console.log('Sending to server:', note);
+        }
+    </script>
+</body>
+</html>
